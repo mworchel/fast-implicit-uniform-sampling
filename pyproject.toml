@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools >= 68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fast-implicit-uniform-sampling"
+version = "0.0.1"
+authors = [
+  { name="Markus Worchel", email="m.worchel@tu-berlin.de" },
+]
+license = {file = "LICENSE.md"}
+description = "Efficiently sample uniformely distributed points on implicit surfaces in PyTorch."
+readme = "README.md"
+keywords = ["PyTorch", "implicit surfaces", "uniform sampling", "3D", "computer vision", "computer graphics"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/mworchel/fast-implicit-uniform-sampling"
+
+[tool.setuptools]
+packages = ["fast_implicit_uniform_sampling"]
