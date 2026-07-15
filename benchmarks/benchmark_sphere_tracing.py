@@ -18,6 +18,7 @@ def main():
     parser.add_argument("--num_rays", type=int, default=10000, help="Number of rays to sample")
     parser.add_argument("--num_runs", type=int, default=5, help="Number of timing runs")
     parser.add_argument("--ray_split_threshold", type=float, default=None, help="Length threshold for ray splitting (optional, only for `iarap` method)")
+    parser.add_argument("--ray_budgeting", type=str, default=None, choices=["hard", "soft"], help="Ray budgeting strategy (only for `iarap` method)")
     parser.add_argument("--output", type=Path, default=None, help="Output file for the benchmark results")
     parser.add_argument("--tag", type=str, default=None, help="Optional tag stored with the benchmark results")
     args = parser.parse_args()
@@ -41,6 +42,8 @@ def main():
     sphere_tracing_kwargs = {}
     if args.method == "iarap" and args.ray_split_threshold is not None:
         sphere_tracing_kwargs["ray_split_threshold"] = args.ray_split_threshold
+    if args.method == "iarap" and args.ray_budgeting is not None:
+        sphere_tracing_kwargs["ray_budgeting"] = args.ray_budgeting
 
     df = pd.DataFrame({'method': [], 'num_rays': [], 'dataset': [], 'sdf_name': [], 'run_idx': [], 'elapsed_time': [], 'peak_memory': [], 'tag': [], 'success': []})
     for idx in range(len(dataset)):

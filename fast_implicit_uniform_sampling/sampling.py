@@ -90,6 +90,7 @@ def sphere_trace_all_intersections(sdf: Callable[[torch.Tensor], torch.Tensor],
                                    ray_origin: torch.Tensor, ray_direction: torch.Tensor, max_t: torch.Tensor, 
                                    eps: float = 1e-4, step_bound: float = 10,
                                    ray_split_threshold: float = 0.01, # Only split rays longer than this threshold
+                                   ray_budgeting: str = "soft", # "soft" or "hard" ray budgeting
                                    verbose: bool = False):
     """
     Sphere trace rays against an SDF, returning all intersections with an epsilon band around the surface.
@@ -98,7 +99,7 @@ def sphere_trace_all_intersections(sdf: Callable[[torch.Tensor], torch.Tensor],
     dtype = ray_origin.dtype
     device = ray_origin.device 
 
-    ray_budget = int(1e6) # Soft maximum number of rays in flight at any time
+    ray_budget = 1e6 # Soft maximum number of rays in flight at any time
     max_iters  = 2000 # Maximum number of iterations per ray (same as Ling et al.)
 
     eps_half = torch.tensor(eps * 0.5, dtype=dtype, device=device)
@@ -117,11 +118,19 @@ def sphere_trace_all_intersections(sdf: Callable[[torch.Tensor], torch.Tensor],
     while active_idx.numel() > 0:
         # Split non-crossing rays
         n_base = p.shape[0]
-        split = n_base < (0.6 * ray_budget)
+        n_split = ray_budget - n_base
+        split = n_split > 0 if ray_budgeting == "hard" else n_base < (0.6 * ray_budget)
         if split:
             is_long_ray = (max_t - t) > ray_split_threshold if ray_split_threshold > 0 else True
             split_idx, p_split, d_split, t_split = split_rays(p, d, t, max_t, mask=~crossing & is_long_ray)
-            # Reject splits exceeding the ray budget
+
+            if ray_budgeting == "hard":
+                # Reject splits exceeding the ray budget (just take the first `n_split` rays)
+                split_idx = split_idx[:n_split]
+                p_split = p_split[:n_split]
+                d_split = d_split[:n_split]
+                t_split = t_split[:n_split]
+
             p = torch.cat([p, p_split], dim=0)
             d = torch.cat([d, d_split], dim=0)
             t = torch.cat([t, t_split], dim=0)
