@@ -240,4 +240,4 @@ class ImplicitUniformSampler():
                 raise RuntimeError("""Unable to infer dtype from the SDF function (it is not a torch.nn.Module).
                                       Please provide device and dtype to the sampler's constructor.""")
 
-        return sample_uniform_points(sdf_func, num_rays, dim=self.dim, eps=self.thresh, device=self.device)
+        return sample_uniform_points(sdf_func, num_rays, dim=self.dim, eps=self.thresh, dtype=dtype, device=device)
