@@ -1,4 +1,4 @@
-# Fast Uniform Sampling of Implicit Surfaces by Casting Rays
+# Fast(er) Uniform Sampling of Implicit Surfaces by Casting Rays
 
 PyTorch code for sampling uniformly distributed points on implicit surfaces represented by signed distance functions.
 
