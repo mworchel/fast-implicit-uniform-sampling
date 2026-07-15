@@ -2,7 +2,7 @@
 
 PyTorch code for sampling uniformly distributed points on implicit surfaces represented by signed distance functions.
 
-The implementation is based on the paper "[Uniform Sampling of Surfaces by Casting Rays](https://arxiv.org/abs/2506.05268)" (Ling et al., 2025), with the optimizations described in "[As-Rigid-As-Possible Regularization for Implicit Surfaces](https://doi.org/10.1111/cgf.70519)" (Djuren et al., 2026).
+The implementation is based on the paper "[Uniform Sampling of Surfaces by Casting Rays](https://arxiv.org/abs/2506.05268)" (Ling et al., 2025), with the optimizations described in "[As-Rigid-As-Possible Regularization for Implicit Surfaces](https://diglib.eg.org/items/56b5824e-204a-4b00-aea4-f9753fdaa1f5)" (Djuren et al., 2026).
 This repository is the official, standalone repackaging of [Djuren et al.'s sampling code](https://gitlab.com/tobidju/arap-regularization-for-implicit-surfaces/-/blob/main/iarap/sampling.py), with minor tweaks, additional documentation, and benchmarks.
 
 The implementation is roughly an order of magnitude faster than [Ling et al.'s reference implementation](https://github.com/iszihan/implicit-uniform-sampler) and requires less memory for large ray counts, which avoids out-of-memory failures:
