@@ -7,11 +7,13 @@ name = "fast-implicit-uniform-sampling"
 version = "0.0.1"
 authors = [
   { name="Markus Worchel", email="m.worchel@tu-berlin.de" },
+  { name="Ugo Finnendahl", email="finnendahl@tu-berlin.de" },
+  { name="Tobias Djuren", email="t.djuren@tu-berlin.de" },
 ]
 license = {file = "LICENSE.md"}
 description = "Efficiently sample uniformely distributed points on implicit surfaces in PyTorch."
 readme = "README.md"
-keywords = ["PyTorch", "implicit surfaces", "uniform sampling", "3D", "computer vision", "computer graphics"]
+keywords = ["PyTorch", "implicit surfaces", "uniform sampling", "3D", "computer vision", "computer graphics", "3D graphics", "signed distance functions"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
